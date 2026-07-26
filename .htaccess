@@ -1,0 +1,40 @@
+Options -Indexes
+ServerSignature Off
+
+# ErrorDocument path (di bawah) selalu diartikan Apache relatif terhadap
+# document root SERVER, bukan folder tempat .htaccess ini berada - benar apa
+# adanya di produksi (document root = folder aplikasi ini sendiri), tapi
+# meleset kalau diakses lewat subfolder seperti localhost/morms (lihat
+# DEPLOY.md soal ini). RewriteRule di bawah ini jadi jalur utama untuk kasus
+# 404 (file benar-benar tidak ada) - targetnya relatif terhadap folder INI,
+# jadi otomatis benar di localhost/morms MAUPUN di domain produksi tanpa
+# perlu hardcode path apa pun.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ error.php [L]
+</IfModule>
+
+ErrorDocument 400 /error.php
+ErrorDocument 401 /error.php
+ErrorDocument 403 /error.php
+ErrorDocument 404 /error.php
+ErrorDocument 429 /error.php
+ErrorDocument 500 /error.php
+ErrorDocument 503 /error.php
+
+<FilesMatch "\.(sql|md|log|sh|env|json|lock)$">
+    Require all denied
+</FilesMatch>
+
+<Files "generate_hash.php">
+    Require all denied
+</Files>
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

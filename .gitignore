@@ -1,0 +1,7 @@
+storage/identitas/*
+!storage/identitas/.htaccess
+
+storage/backup-bukti-pembayaran/*
+!storage/backup-bukti-pembayaran/.htaccess
+
+storage/*.sql
