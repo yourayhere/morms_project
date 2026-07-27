@@ -72,4 +72,4 @@ Repo ini murni untuk portofolio/showcase kode, **bukan** salinan environment pro
 
 ---
 
-Dibuat oleh Uray sebagai proyek pembelajaran full-stack development & penerapan keamanan aplikasi web.
+Dibuat oleh Tim 32 Jam sebagai proyek MPTI Informatika FTI UAD full-stack development & penerapan keamanan aplikasi web.
